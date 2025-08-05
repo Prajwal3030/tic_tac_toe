@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Tic Tac Toe</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Multiplayer Tic Tac Toe</h1>
+            <p class="subtitle">Play with friends online!</p>
+        </header>
+        
+        <!-- Multiplayer Setup -->
+        <div class="multiplayer-setup" id="multiplayer-setup">
+            <div class="setup-buttons">
+                <button class="btn" id="create-room-btn">Create New Game</button>
+                <button class="btn btn-secondary" id="join-room-btn">Join Game</button>
+            </div>
+            
+            <div class="join-form" id="join-form" style="display: none;">
+                <input type="text" id="room-code-input" placeholder="Enter Room Code" maxlength="6">
+                <button class="btn" id="join-submit-btn">Join</button>
+                <button class="btn btn-secondary" id="cancel-join-btn">Cancel</button>
+            </div>
+        </div>
+        
+        <!-- Game Room Info -->
+        <div class="room-info" id="room-info" style="display: none;">
+            <div class="room-code">
+                <span>Room Code: </span>
+                <span id="room-code-display" class="room-code-text"></span>
+                <button class="btn btn-small" id="copy-room-btn">Copy</button>
+            </div>
+            <div class="connection-status" id="connection-status">
+                <span class="status-dot"></span>
+                <span id="status-text">Connecting...</span>
+            </div>
+        </div>
+        
+        <div class="game-info">
+            <div class="status" id="status">Create or join a game to start playing!</div>
+            <div class="score">
+                <span>X: <span id="score-x">0</span></span>
+                <span>O: <span id="score-o">0</span></span>
+            </div>
+        </div>
+        
+        <div class="game-board" id="board">
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+        </div>
+        
+        <div class="controls">
+            <button id="restart-btn" class="btn" disabled>Restart Game</button>
+            <button id="reset-score-btn" class="btn btn-secondary" disabled>Reset Score</button>
+            <button id="leave-room-btn" class="btn btn-danger" style="display: none;">Leave Room</button>
+        </div>
+        
+        <div class="game-over" id="game-over">
+            <div class="game-over-content">
+                <h2 id="winner-text"></h2>
+                <button id="play-again-btn" class="btn">Play Again</button>
+            </div>
+        </div>
+        
+        <!-- Error Modal -->
+        <div class="error-modal" id="error-modal">
+            <div class="error-content">
+                <h3>Error</h3>
+                <p id="error-message"></p>
+                <button class="btn" id="error-ok-btn">OK</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
