@@ -81,8 +81,10 @@ class MultiplayerTicTacToe {
         });
         
         this.socket.on('moveMade', ({ index, symbol, board, currentPlayer, currentPlayerSymbol }) => {
+            console.log('[moveMade] index:', index, 'symbol:', symbol, 'board:', board, 'currentPlayer:', currentPlayer, 'currentPlayerSymbol:', currentPlayerSymbol, 'playerSymbol:', this.playerSymbol);
             this.updateBoard(board);
             this.isMyTurn = this.playerSymbol === currentPlayerSymbol;
+            console.log('[moveMade] isMyTurn:', this.isMyTurn);
             this.updateStatus(this.isMyTurn ? 'Your turn!' : 'Waiting for opponent...');
         });
         
