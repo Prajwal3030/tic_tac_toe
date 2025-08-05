@@ -73,16 +73,16 @@ class MultiplayerTicTacToe {
             this.updateStatus(`Room created! Share code: ${roomCode}`);
         });
         
-        this.socket.on('gameStart', ({ players, currentPlayer }) => {
+        this.socket.on('gameStart', ({ players, currentPlayer, currentPlayerSymbol }) => {
             this.gameActive = true;
-            this.isMyTurn = currentPlayer === 0;
+            this.isMyTurn = this.playerSymbol === currentPlayerSymbol;
             this.updateStatus(this.isMyTurn ? 'Your turn!' : 'Waiting for opponent...');
             this.enableGameControls();
         });
         
-        this.socket.on('moveMade', ({ index, symbol, board, currentPlayer }) => {
+        this.socket.on('moveMade', ({ index, symbol, board, currentPlayer, currentPlayerSymbol }) => {
             this.updateBoard(board);
-            this.isMyTurn = currentPlayer === 0;
+            this.isMyTurn = this.playerSymbol === currentPlayerSymbol;
             this.updateStatus(this.isMyTurn ? 'Your turn!' : 'Waiting for opponent...');
         });
         

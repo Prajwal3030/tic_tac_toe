@@ -92,7 +92,8 @@ io.on('connection', (socket) => {
         // Notify both players that the game can start
         io.to(roomCode).emit('gameStart', {
             players: game.players.map(p => ({ symbol: p.symbol })),
-            currentPlayer: game.currentPlayer
+            currentPlayer: game.currentPlayer,
+            currentPlayerSymbol: game.players[game.currentPlayer].symbol
         });
         
         console.log(`Player joined room: ${roomCode}`);
@@ -105,15 +106,14 @@ io.on('connection', (socket) => {
         if (!game || !game.gameActive) return;
         
         // Check if it's the player's turn
-        const playerIndex = game.players.findIndex(p => p.id === socket.id);
-        if (playerIndex !== game.currentPlayer) return;
+        const player = game.players[game.currentPlayer];
+        if (socket.id !== player.id) return;
         
         // Check if the cell is empty
         if (game.board[index] !== '') return;
         
         // Make the move
-        const symbol = game.players[playerIndex].symbol;
-        game.board[index] = symbol;
+        game.board[index] = player.symbol;
         
         // Check for win
         if (checkWin(game.board, game.winningConditions)) {
@@ -146,9 +146,10 @@ io.on('connection', (socket) => {
             
             io.to(roomCode).emit('moveMade', {
                 index,
-                symbol,
+                symbol: player.symbol,
                 board: game.board,
-                currentPlayer: game.currentPlayer
+                currentPlayer: game.currentPlayer,
+                currentPlayerSymbol: game.players[game.currentPlayer].symbol
             });
         }
     });
